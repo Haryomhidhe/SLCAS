@@ -149,6 +149,8 @@ public class MainWindow extends JFrame {
             contentPanel.add(searchPanel,"SEARCH");
             contentPanel.add(reportPanel,"REPORT");
             
+            viewPanel.setLayout(new BorderLayout());
+            viewPanel.setBackground(new Color(244,246,251));
             
             //eventlistener
             viewBtn.addActionListener(e-> cards.show(contentPanel,"VIEW"));
@@ -156,6 +158,44 @@ public class MainWindow extends JFrame {
             adminBtn.addActionListener(e-> cards.show(contentPanel,"ADMIN"));
             searchBtn.addActionListener(e-> cards.show(contentPanel,"SEARCH"));
             reportBtn.addActionListener(e-> cards.show(contentPanel,"REPORT"));
+            
+            //BUTTONROW
+            JPanel buttonRow = new JPanel(new FlowLayout(FlowLayout.LEFT,10,10));
+            buttonRow.setBackground(new Color(244,246,251));
+            
+            //addBtn
+              JButton addBtn = new JButton("+ Add Item");
+                addBtn.setBackground(new Color(26,58,108)); 
+                addBtn.setForeground(Color.WHITE);
+                
+            //borrowItemBtn
+              JButton borrowitemBtn = new JButton("Borrow");
+                borrowitemBtn.setBackground(new Color(26,122,60)); 
+                borrowitemBtn.setForeground(Color.WHITE);
+              
+            //returnItemBtn  
+              JButton returnitemBtn = new JButton("Return Item");
+                returnitemBtn.setBackground(new Color(230,126,34)); 
+                returnitemBtn.setForeground(Color.WHITE);
+                
+            //deleteBtn
+              JButton deleteBtn = new JButton("Delete");
+                deleteBtn.setBackground(new Color(192,57,43)); 
+                deleteBtn.setForeground(Color.WHITE);
+             
+            //undobtn
+              JButton undoBtn = new JButton("Undo");
+                undoBtn.setBackground(new Color(232,238,245)); 
+                undoBtn.setForeground(new Color(68,85,102));
+                
+            //calling each button
+            buttonRow.add(deleteBtn);
+            buttonRow.add(addBtn);
+            buttonRow.add(borrowitemBtn);
+            buttonRow.add(returnitemBtn);
+            buttonRow.add(undoBtn);
+
+            viewPanel.add(buttonRow,BorderLayout.NORTH);
     }
 
     public static void main(String[] args) {
