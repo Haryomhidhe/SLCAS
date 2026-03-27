@@ -1,64 +1,69 @@
 package model;
-abstract class LibraryItem {
-  private String id; // only id class can access it directly
-  private String title; // only title class can access it directly
-  private String author; // only author class can access it directly
-  private int year; // only this year can access it directly
-  private boolean isAvailable;  // only isAvailable class can access it directly
 
- public LibraryItem(String id, String title, String author, int year, boolean isAvailable ){
-  this.id = id;
-  this.title = title;
-  this.author = author;
-  this.year = year;
-  this.isAvailable = isAvailable;
-}
- 
-  public abstract String getItemType(); 
+public abstract class LibraryItem implements Borrowable {
+    private String id;
+    private String title;
+    private String author;
+    private int year;
+    private boolean available;
+    private int borrowCount;
 
-//getter
-public String getId(){
-  return id;
-}
-//setter
-public void setId(String id){
-  this.id = id;
-}
+    public LibraryItem(String id, String title, String author, int year, boolean available) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.year = year;
+        this.available = available;
+        this.borrowCount = 0;
+    }
 
-//getter
-public String getTitle(){
-  return title;
-}
-//setter
-public void setTitle(String title){
-  this.title = title;
-}
+    public abstract String getItemType();
+    public abstract String toFileString();
 
-//getter
-public String getAuthor(){
-  return author;
-}
-//setter
-public void setAuthor(String author){
-  this.author = author;
-}
+    @Override
+    public boolean borrow() {
+        if (available) {
+            available = false;
+            borrowCount++;
+            return true;
+        }
+        return false;
+    }
 
-//getter
-public int getYear(){
-  return year;
-}
-//setter
-public void setYear(int year){
-  this.year = year;
-}
+    @Override
+    public boolean returnItem() {
+        if (!available) {
+            available = true;
+            return true;
+        }
+        return false;
+    }
 
-//getter
-public boolean isAvailable(){
-  return isAvailable;
-}
-//setter
-public void setIsAvailable(boolean isAvailable){
-  this.isAvailable = isAvailable;
-}
-}
+    @Override
+    public boolean isAvailable() {
+        return available;
+    }
 
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
+
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+
+    public String getAuthor() { return author; }
+    public void setAuthor(String author) { this.author = author; }
+
+    public int getYear() { return year; }
+    public void setYear(int year) { this.year = year; }
+
+    public void setAvailable(boolean available) { this.available = available; }
+
+    public int getBorrowCount() { return borrowCount; }
+    public void setBorrowCount(int borrowCount) { this.borrowCount = borrowCount; }
+
+    @Override
+    public String toString() {
+        return "[" + getItemType() + "] " + id + " | " + title + " | " + author
+                + " | " + year + " | " + (available ? "Available" : "Borrowed");
+    }
+}

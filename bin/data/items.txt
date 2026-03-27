@@ -1,0 +1,6 @@
+BOOK|BK-001|Introduction to Java|Herbert Schildt|2020|true|0|Programming
+BOOK|BK-002|Clean Code|Robert C. Martin|2008|false|0|Software Engineering
+BOOK|BK-003|Data Structures & Algorithms|Thomas Cormen|2009|true|0|Computer Science
+BOOK|BK-004|Design Patterns|Gang of Four|1994|true|0|Software Engineering
+MAGAZINE|MG-001|National Geographic|Various Authors|2023|true|0|45
+JOURNAL|JN-001|Nature Journal|Editorial Team|2022|false|0|12
