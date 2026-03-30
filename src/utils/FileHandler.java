@@ -255,7 +255,7 @@ public class FileHandler {
         UserAccount user = new UserAccount(userId, name, email);
 
         // parse borrowing history (comma-separated item IDs)
-        if (parts.length > 4 && !parts[3].trim().isEmpty()) {
+        if (parts.length > 3 && !parts[3].trim().isEmpty()) {
             String[] historyIds = parts[3].split(",");
             ArrayList<String> history = new ArrayList<>();
             for (String id : historyIds) {
