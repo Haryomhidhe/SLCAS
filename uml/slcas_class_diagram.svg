@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100" font-family="Arial, sans-serif">
+  <defs>
+    <style>
+      .class-box { fill: #ffffff; stroke: #000000; stroke-width: 1.5; }
+      .class-header { fill: #f5f5f5; }
+      .class-name { fill: #000000; font-weight: bold; font-size: 14px; }
+      .method-text { fill: #000000; font-size: 11px; }
+      .field-text { fill: #333333; font-size: 11px; }
+      .arrow { stroke: #000000; stroke-width: 1.5; fill: none; }
+      .arrow-head { fill: #000000; }
+      .dashed { stroke-dasharray: 5,3; }
+      .title-text { fill: #000000; font-size: 20px; font-weight: bold; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" class="arrow-head"/>
+    </marker>
+    <marker id="inherit" markerWidth="12" markerHeight="12" refX="12" refY="6" orient="auto">
+      <polygon points="0 0, 12 6, 0 12" fill="none" stroke="#000000" stroke-width="1.5"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="450" y="30" text-anchor="middle" class="title-text">SLCAS Class Diagram</text>
+  <text x="450" y="50" text-anchor="middle" font-size="12" fill="#666">Smart Library Circulation System</text>
+
+  <!-- INTERFACE: Borrowable -->
+  <g>
+    <rect x="400" y="70" width="100" height="65" class="class-box"/>
+    <rect x="400" y="70" width="100" height="22" class="class-header"/>
+    <text x="450" y="85" text-anchor="middle" font-size="9" fill="#666">&lt;&lt;interface&gt;&gt;</text>
+    <text x="450" y="100" text-anchor="middle" class="class-name" font-size="12">Borrowable</text>
+    <text x="410" y="118" class="method-text">+ borrow(): boolean</text>
+    <text x="410" y="132" class="method-text">+ returnItem(): boolean</text>
+  </g>
+
+  <!-- ABSTRACT: LibraryItem -->
+  <g>
+    <rect x="370" y="170" width="160" height="110" class="class-box"/>
+    <rect x="370" y="170" width="160" height="22" class="class-header"/>
+    <text x="450" y="185" text-anchor="middle" class="class-name">LibraryItem</text>
+    <text x="380" y="205" class="field-text">- id: String</text>
+    <text x="380" y="220" class="field-text">- title: String</text>
+    <text x="380" y="235" class="field-text">- author: String</text>
+    <text x="380" y="250" class="field-text">- year: int</text>
+    <text x="380" y="265" class="field-text">- available: boolean</text>
+    <text x="380" y="280" class="method-text">+ borrow(): boolean</text>
+  </g>
+
+  <!-- CLASS: Book -->
+  <g>
+    <rect x="50" y="350" width="110" height="60" class="class-box"/>
+    <rect x="50" y="350" width="110" height="22" class="class-header"/>
+    <text x="105" y="365" text-anchor="middle" class="class-name">Book</text>
+    <text x="60" y="385" class="field-text">- genre: String</text>
+    <text x="60" y="400" class="method-text">+ getGenre()</text>
+  </g>
+
+  <!-- CLASS: Magazine -->
+  <g>
+    <rect x="190" y="350" width="110" height="60" class="class-box"/>
+    <rect x="190" y="350" width="110" height="22" class="class-header"/>
+    <text x="245" y="365" text-anchor="middle" class="class-name">Magazine</text>
+    <text x="200" y="385" class="field-text">- issueNumber</text>
+    <text x="200" y="400" class="method-text">+ getIssueNum()</text>
+  </g>
+
+  <!-- CLASS: Journal -->
+  <g>
+    <rect x="330" y="350" width="110" height="60" class="class-box"/>
+    <rect x="330" y="350" width="110" height="22" class="class-header"/>
+    <text x="385" y="365" text-anchor="middle" class="class-name">Journal</text>
+    <text x="340" y="385" class="field-text">- volume: int</text>
+    <text x="340" y="400" class="method-text">+ getVolume()</text>
+  </g>
+
+  <!-- CLASS: UserAccount -->
+  <g>
+    <rect x="550" y="350" width="140" height="75" class="class-box"/>
+    <rect x="550" y="350" width="140" height="22" class="class-header"/>
+    <text x="620" y="365" text-anchor="middle" class="class-name">UserAccount</text>
+    <text x="560" y="383" class="field-text">- userId: String</text>
+    <text x="560" y="398" class="field-text">- name: String</text>
+    <text x="560" y="413" class="method-text">+ recordBorrow()</text>
+  </g>
+
+  <!-- CLASS: LibraryDatabase -->
+  <g>
+    <rect x="550" y="470" width="140" height="90" class="class-box"/>
+    <rect x="550" y="470" width="140" height="22" class="class-header"/>
+    <text x="620" y="485" text-anchor="middle" class="class-name">LibraryDatabase</text>
+    <text x="560" y="505" class="field-text">- items: ArrayList</text>
+    <text x="560" y="520" class="field-text">- users: HashMap</text>
+    <text x="560" y="535" class="field-text">- undoStack: Stack</text>
+    <text x="560" y="550" class="method-text">+ addItem()</text>
+  </g>
+
+  <!-- CLASS: LibraryManager -->
+  <g>
+    <rect x="50" y="620" width="130" height="80" class="class-box"/>
+    <rect x="50" y="620" width="130" height="22" class="class-header"/>
+    <text x="115" y="635" text-anchor="middle" class="class-name">LibraryManager</text>
+    <text x="60" y="655" class="field-text">- database</text>
+    <text x="60" y="670" class="method-text">+ addItem()</text>
+    <text x="60" y="685" class="method-text">+ removeItem()</text>
+    <text x="60" y="700" class="method-text">+ getAllItems()</text>
+  </g>
+
+  <!-- CLASS: BorrowController -->
+  <g>
+    <rect x="210" y="620" width="130" height="80" class="class-box"/>
+    <rect x="210" y="620" width="130" height="22" class="class-header"/>
+    <text x="275" y="635" text-anchor="middle" class="class-name">BorrowController</text>
+    <text x="220" y="655" class="field-text">- database</text>
+    <text x="220" y="670" class="method-text">+ borrowItem()</text>
+    <text x="220" y="685" class="method-text">+ returnItem()</text>
+    <text x="220" y="700" class="method-text">+ getQueueSize()</text>
+  </g>
+
+  <!-- CLASS: SearchEngine -->
+  <g>
+    <rect x="370" y="620" width="130" height="80" class="class-box"/>
+    <rect x="370" y="620" width="130" height="22" class="class-header"/>
+    <text x="435" y="635" text-anchor="middle" class="class-name">SearchEngine</text>
+    <text x="380" y="655" class="method-text">+ linearSearch()</text>
+    <text x="380" y="670" class="method-text">+ binarySearch()</text>
+    <text x="380" y="685" class="method-text">+ recursiveSearch()</text>
+  </g>
+
+  <!-- CLASS: SortEngine -->
+  <g>
+    <rect x="530" y="620" width="130" height="80" class="class-box"/>
+    <rect x="530" y="620" width="130" height="22" class="class-header"/>
+    <text x="595" y="635" text-anchor="middle" class="class-name">SortEngine</text>
+    <text x="540" y="655" class="method-text">+ mergeSort()</text>
+    <text x="540" y="670" class="method-text">+ insertionSort()</text>
+    <text x="540" y="685" class="method-text">+ selectionSort()</text>
+    <text x="540" y="700" class="method-text">+ quickSort()</text>
+  </g>
+
+  <!-- CLASS: IDGenerator -->
+  <g>
+    <rect x="50" y="750" width="130" height="55" class="class-box"/>
+    <rect x="50" y="750" width="130" height="22" class="class-header"/>
+    <text x="115" y="765" text-anchor="middle" class="class-name">IDGenerator</text>
+    <text x="60" y="785" class="method-text">+ generateBookId()</text>
+    <text x="60" y="800" class="method-text">+ generateUserId()</text>
+  </g>
+
+  <!-- CLASS: FileHandler -->
+  <g>
+    <rect x="210" y="750" width="130" height="55" class="class-box"/>
+    <rect x="210" y="750" width="130" height="22" class="class-header"/>
+    <text x="275" y="765" text-anchor="middle" class="class-name">FileHandler</text>
+    <text x="220" y="785" class="method-text">+ saveItems()</text>
+    <text x="220" y="800" class="method-text">+ loadItems()</text>
+  </g>
+
+  <!-- CLASS: MainWindow -->
+  <g>
+    <rect x="700" y="620" width="150" height="80" class="class-box"/>
+    <rect x="700" y="620" width="150" height="22" class="class-header"/>
+    <text x="775" y="635" text-anchor="middle" class="class-name">MainWindow</text>
+    <text x="710" y="655" class="field-text">- database</text>
+    <text x="710" y="670" class="field-text">- libraryManager</text>
+    <text x="710" y="685" class="method-text">+ initComponents()</text>
+    <text x="710" y="700" class="method-text">+ refreshTables()</text>
+  </g>
+
+  <!-- INHERITANCE ARROWS (solid with triangle) -->
+  <line x1="105" y1="350" x2="400" y2="280" class="arrow" marker-end="url(#inherit)"/>
+  <line x1="245" y1="350" x2="420" y2="280" class="arrow" marker-end="url(#inherit)"/>
+  <line x1="385" y1="350" x2="440" y2="280" class="arrow" marker-end="url(#inherit)"/>
+  <line x1="450" y1="350" x2="450" y2="280" class="arrow" marker-end="url(#inherit)"/>
+  <line x1="450" y1="170" x2="450" y2="135" class="arrow" marker-end="url(#inherit)"/>
+
+  <!-- ASSOCIATION ARROWS (dashed) -->
+  <line x1="180" y1="620" x2="550" y2="560" class="arrow dashed"/>
+  <line x1="340" y1="620" x2="570" y2="560" class="arrow dashed"/>
+  <line x1="690" y1="515" x2="690" y2="425" class="arrow"/>
+  <line x1="620" y1="350" x2="530" y2="320" class="arrow dashed"/>
+
+  <!-- MainWindow connections -->
+  <line x1="700" y1="660" x2="660" y2="660" class="arrow"/>
+
+  <!-- NOTES -->
+  <g>
+    <rect x="700" y="750" width="180" height="70" fill="#fffef0" stroke="#000000"/>
+    <text x="710" y="770" font-weight="bold" font-size="11">LibraryDatabase:</text>
+    <text x="710" y="787" font-size="10">ArrayList, HashMap,</text>
+    <text x="710" y="802" font-size="10">Queue, Stack, Array</text>
+  </g>
+
+  <g>
+    <rect x="370" y="750" width="150" height="55" fill="#fffef0" stroke="#000000"/>
+    <text x="380" y="768" font-weight="bold" font-size="10">SearchEngine:</text>
+    <text x="380" y="783" font-size="10">Linear, Binary, Recursive</text>
+    <text x="380" y="798" font-size="10">(3 algorithms)</text>
+  </g>
+
+  <g>
+    <rect x="530" y="750" width="150" height="55" fill="#fffef0" stroke="#000000"/>
+    <text x="540" y="768" font-weight="bold" font-size="10">SortEngine:</text>
+    <text x="540" y="783" font-size="10">Merge, Insertion,</text>
+    <text x="540" y="798" font-size="10">Selection, Quick</text>
+  </g>
+
+  <!-- Legend -->
+  <g>
+    <rect x="50" y="850" width="220" height="60" fill="#ffffff" stroke="#999"/>
+    <text x="60" y="870" font-weight="bold" font-size="11">Legend:</text>
+    <line x1="60" y1="885" x2="90" y2="885" class="arrow" marker-end="url(#inherit)"/>
+    <text x="100" y="890" font-size="10">Inheritance (extends)</text>
+    <line x1="60" y1="900" x2="90" y2="900" class="arrow dashed"/>
+    <text x="100" y="905" font-size="10">Uses / Dependency</text>
+  </g>
+</svg>

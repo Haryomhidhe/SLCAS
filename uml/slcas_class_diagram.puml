@@ -1,0 +1,150 @@
+@startuml
+title SLCAS - Class Diagram
+footer Smart Library Circulation System
+
+' Simplified Class Diagram for Student Project
+
+' === INTERFACES ===
+interface Borrowable {
+    + borrow() : boolean
+    + returnItem() : boolean
+    + isAvailable() : boolean
+}
+
+' === MODEL CLASSES ===
+abstract class LibraryItem {
+    - id : String
+    - title : String
+    - author : String
+    - year : int
+    - available : boolean
+    - borrowCount : int
+    + borrow() : boolean
+    + returnItem() : boolean
+    + isAvailable() : boolean
+    + getId() : String
+    + getTitle() : String
+}
+
+class Book {
+    - genre : String
+}
+
+class Magazine {
+    - issueNumber : int
+}
+
+class Journal {
+    - volume : int
+}
+
+class UserAccount {
+    - userId : String
+    - name : String
+    - email : String
+    - borrowingHistory : ArrayList
+    - currentlyBorrowed : HashMap
+    + recordBorrow(itemId, dueDate) : void
+    + recordReturn(itemId) : void
+    + getOverdueItems() : List
+}
+
+class LibraryDatabase {
+    - items : ArrayList
+    - users : HashMap
+    - reservationQueues : HashMap
+    - undoStack : Stack
+    + addItem(item) : void
+    + removeItem(id) : void
+    + getUserById(userId) : UserAccount
+}
+
+' === CONTROLLER CLASSES ===
+class LibraryManager {
+    - database : LibraryDatabase
+    + addItem(item) : boolean
+    + removeItem(id) : boolean
+    + undoLastAction() : String
+    + getAllItems() : List
+}
+
+class BorrowController {
+    - database : LibraryDatabase
+    + borrowItem(userId, itemId) : void
+    + returnItem(userId, itemId) : void
+    + getQueueSize(itemId) : int
+}
+
+class SearchEngine {
+    + linearSearch(items, query) : List
+    + binarySearch(items, query) : List
+    + recursiveSearch(items, query) : List
+}
+
+class SortEngine {
+    + mergeSort(items) : List
+    + insertionSort(items) : List
+    + selectionSort(items) : List
+    + quickSort(items) : List
+}
+
+' === UTILITY CLASSES ===
+class IDGenerator {
+    + generateBookId() : String
+    + generateUserId() : String
+}
+
+class FileHandler {
+    + saveItems(items) : boolean
+    + loadItems() : List
+    + saveUsers(users) : boolean
+    + loadUsers() : HashMap
+}
+
+' === GUI CLASS ===
+class MainWindow {
+    - database : LibraryDatabase
+    - libraryManager : LibraryManager
+    - borrowController : BorrowController
+    + initComponents() : void
+    + refreshAllTables() : void
+}
+
+' === RELATIONSHIPS ===
+Borrowable <|-- LibraryItem
+LibraryItem <|-- Book
+LibraryItem <|-- Magazine
+LibraryItem <|-- Journal
+
+LibraryManager --> LibraryDatabase : uses
+BorrowController --> LibraryDatabase : uses
+SearchEngine --> LibraryItem : searches
+SortEngine --> LibraryItem : sorts
+
+MainWindow --> LibraryManager : uses
+MainWindow --> BorrowController : uses
+MainWindow --> SearchEngine : uses
+MainWindow --> SortEngine : uses
+
+LibraryDatabase o-- LibraryItem : contains
+LibraryDatabase o-- UserAccount : contains
+
+LibraryManager ..> IDGenerator : uses
+FileHandler ..> LibraryDatabase : saves/loads
+
+note top of LibraryDatabase
+    Uses required data structures:
+    ArrayList, HashMap, Queue, Stack, Array
+end note
+
+note bottom of SearchEngine
+    3 Search Algorithms:
+    Linear, Binary, Recursive
+end note
+
+note bottom of SortEngine
+    4 Sorting Algorithms:
+    Merge, Insertion, Selection, Quick
+end note
+
+@enduml

@@ -8,7 +8,8 @@ import model.LibraryDatabase;
 import model.LibraryItem;
 import model.UserAccount;
 import utils.IDGenerator;
-
+import utils.FileHandler;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -39,28 +40,41 @@ public class MainWindow extends JFrame {
     private JLabel statusLabel;
     private String selectedAlgo = "Merge Sort";
 
-    public MainWindow() {
-        database         = new LibraryDatabase();
-        libraryManager   = new LibraryManager(database);
-        borrowController = new BorrowController(database);
-        searchEngine     = new SearchEngine();
-        sortEngine       = new SortEngine();
+ public MainWindow() {
+    database         = new LibraryDatabase();
+    libraryManager   = new LibraryManager(database);
+    borrowController = new BorrowController(database);
+    searchEngine     = new SearchEngine();
+    sortEngine       = new SortEngine();
 
-        // Sample data so tables aren't empty on launch
+    database.setItemsRaw(new ArrayList<>(FileHandler.loadItems()));
+    database.setUsersRaw(FileHandler.loadUsers());
+
+    // sample data only on first run, when nothing was loaded
+    if (database.getTotalItemCount() == 0) {
         libraryManager.addBook("BK-001", "Clean Code", "Robert Martin", 2008, "Programming");
         libraryManager.addBook("BK-002", "The Pragmatic Programmer", "David Thomas", 1999, "Programming");
         libraryManager.addMagazine("MG-001", "National Geographic", "Various", 2023, 201);
         libraryManager.addJournal("JN-001", "Nature", "Various", 2022, 45);
-        database.addUser(new UserAccount("U-001", "Ayomide", "ayomide@miva.edu.ng"));
-
-        initComponents();
     }
+    if (!database.userExists("U-001")) {
+        database.addUser(new UserAccount("U-001", "Ayomide", "ayomide@miva.edu.ng"));
+    }
+
+    initComponents();
+}
 
     private void initComponents() {
         setTitle("Smart Library Circulation System");
         setSize(1100, 650);
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+    @Override
+    public void windowClosing(WindowEvent e) {
+        FileHandler.saveAll(database.getAllItems(), database.getAllUsers());
+    }
+});
 
         // ─── SIDEBAR ──────────────────────────────────────────────────────────
         JPanel sidebarPanel = new JPanel();
@@ -137,6 +151,8 @@ public class MainWindow extends JFrame {
         JButton undoBtn       = makeBtn("Undo",          new Color(232, 238, 245), new Color(68, 85, 102));
         buttonRow.add(addBtn); buttonRow.add(borrowItemBtn); buttonRow.add(returnItemBtn);
         buttonRow.add(deleteBtn); buttonRow.add(undoBtn);
+        JButton addUserBtn = makeBtn("+ Add Student", new Color(26, 58, 108), Color.WHITE);
+buttonRow.add(addUserBtn);
         viewPanel.add(buttonRow, BorderLayout.NORTH);
 
         viewTableModel = new DefaultTableModel(new String[]{"ID","Title","Author","Type","Year","Status"}, 0) {
@@ -195,6 +211,21 @@ public class MainWindow extends JFrame {
             JOptionPane.showMessageDialog(this, r != null ? r : "Nothing to undo.");
             refreshAllTables();
         });
+ addUserBtn.addActionListener(e -> {
+    String name = JOptionPane.showInputDialog(this, "Student name:");
+    if (name == null || name.trim().isEmpty()) return;
+    String email = JOptionPane.showInputDialog(this, "Student email:");
+    if (email == null || email.trim().isEmpty()) return;
+
+    if (name.contains("|") || email.contains("|")) {
+        JOptionPane.showMessageDialog(this, "The | character is not allowed.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    String newId = IDGenerator.generateUserId(new ArrayList<>(database.getAllUsers().keySet()));
+    libraryManager.addUser(new UserAccount(newId, name.trim(), email.trim()));
+    JOptionPane.showMessageDialog(this, "Student added. ID: " + newId);
+});
 
         borrowItemBtn.addActionListener(e -> {
             int row = viewTable.getSelectedRow();

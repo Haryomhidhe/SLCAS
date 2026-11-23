@@ -1,0 +1,5 @@
+BOOK|BK-001|Clean Code|Robert Martin|2008|false|1|Programming
+BOOK|BK-002|The Pragmatic Programmer|David Thomas|1999|true|0|Programming
+MAGAZINE|MG-001|National Geographic|Various|2023|true|0|201
+JOURNAL|JN-001|Nature|Various|2022|true|0|45
+BOOK|BK-003|AYOMIDE|GOOD DAY|2018|true|0|POP
